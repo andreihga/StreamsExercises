@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,7 +29,7 @@ public class Main {
             add(employee9);
         }};
 
-        Map<String, List<Employee>> employeesSortedByJobTitle = groupEmployeeByJobTitle(employeeList);
+        Map<String, List<Employee>> employeesSortedByJobTitle = groupEmployeesByJobTitleWithStreams(employeeList);
         for (String jobTitle : employeesSortedByJobTitle.keySet()) {
 
             System.out.println(jobTitle);
@@ -38,6 +39,7 @@ public class Main {
             System.out.println();
 
         }
+
 
     }
 
@@ -64,9 +66,13 @@ public class Main {
         for (Employee e : givenEmployeeList) {
             List<Employee> employeeListByJobTitle = groupedEmployees.getOrDefault(e.jobTitle, new ArrayList<>());
             employeeListByJobTitle.add(e);
-            groupedEmployees.put(e.jobTitle,employeeListByJobTitle);
+            groupedEmployees.put(e.jobTitle, employeeListByJobTitle);
         }
         return groupedEmployees;
+    }
+
+    public static Map<String, List<Employee>> groupEmployeesByJobTitleWithStreams(List<Employee> employeeList) {
+        return employeeList.stream().collect(Collectors.groupingBy(Employee::getJobTitle));
     }
 
 }
