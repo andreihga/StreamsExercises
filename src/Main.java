@@ -28,7 +28,7 @@ public class Main {
             add(employee9);
         }};
 
-        Map<String, List<Employee>> employeesSortedByJobTitle = groupEmployeesByJobTitle(employeeList);
+        Map<String, List<Employee>> employeesSortedByJobTitle = groupEmployeeByJobTitle(employeeList);
         for (String jobTitle : employeesSortedByJobTitle.keySet()) {
 
             System.out.println(jobTitle);
@@ -41,7 +41,7 @@ public class Main {
 
     }
 
-    public static Map<String, List<Employee>> groupEmployeesByJobTitle(List<Employee> employeeList) {
+    public static Map<String, List<Employee>> groupEmployeesByJobTitleRaw(List<Employee> employeeList) {
 
         Map<String, List<Employee>> groupedEmployees = new HashMap<>();
         for (Employee employee : employeeList) {
@@ -54,6 +54,17 @@ public class Main {
                     add(employee);
                 }});
             }
+        }
+        return groupedEmployees;
+    }
+
+    public static Map<String, List<Employee>> groupEmployeeByJobTitle(List<Employee> givenEmployeeList) {
+        Map<String, List<Employee>> groupedEmployees = new HashMap<>();
+
+        for (Employee e : givenEmployeeList) {
+            List<Employee> employeeListByJobTitle = groupedEmployees.getOrDefault(e.jobTitle, new ArrayList<>());
+            employeeListByJobTitle.add(e);
+            groupedEmployees.put(e.jobTitle,employeeListByJobTitle);
         }
         return groupedEmployees;
     }
