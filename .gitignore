@@ -1,4 +1,4 @@
 # Don't track content of these folders
-#target
+target/
 .idea/*
 *.iml
